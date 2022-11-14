@@ -1,11 +1,13 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { router } from 'next/router';
 import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
 
 const AddPostForm = () => {
 
   const dispatch = useDispatch();
+  const isAuth = useSelector(state => state.authReducer.isAuth)
 	const titleRef = useRef();
 	const imageRef = useRef();
 	const decadeRef = useRef();
@@ -21,8 +23,11 @@ const AddPostForm = () => {
 			description: descriptionRef.current.value,
 		};
     dispatch({type: 'setEvent', payload: eventData});
+    router.replace('/');
 	};
 
+function getJsxContent(){
+  if(isAuth){
 	return (
 		<section>
 			<form className={classes.form} onSubmit={formSubmitHandler}>
@@ -48,6 +53,12 @@ const AddPostForm = () => {
 			</form>
 		</section>
 	);
-};
+  }
+ 
+  return <p>Please login to add new event posts.</p>
+}
+
+return getJsxContent();
+}
 
 export default AddPostForm;

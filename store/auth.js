@@ -37,7 +37,7 @@ const initialEventState = {
     {id: 2, title: 'IBM PC - Model 5150', image:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Ibm_px_xt_color.jpg/2560px-Ibm_px_xt_color.jpg', decade: '1980s', description: 'The IBM Personal Computer (model 5150, commonly known as the IBM PC) is the first microcomputer released in the IBM PC model line and the basis for the IBM PC compatible de facto standard. Released on August 12, 1981, it was created by a team of engineers and designers directed by Don Estridge in Boca Raton, Florida.'},
     {id: 3,title: 'Chernobyl Disaster', image:'https://upload.wikimedia.org/wikipedia/commons/6/6e/View_of_Chernobyl_taken_from_Pripyat.JPG' , decade: '1980s', description: 'The Chernobyl disaster (also called the Chornobyl disaster) was a nuclear accident that occurred on 26 April 1986 at the No. 4 reactor in the Chernobyl Nuclear Power Plant, near the city of Pripyat in the north of the Ukrainian SSR in the Soviet Union.'},
     {id: 4, title: 'Beatlemania Spreads Worldwide', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/The_Beatles_and_Lill-Babs_1963.jpg', decade: '1960s', description: 'By early 1964, the Beatles were international stars and had achieved unprecedented levels of critical and commercial success. They became a leading force in Britain\'s cultural resurgence, ushering in the British Invasion of the United States pop market, and soon made their film debut with A Hard Day\'s Night (1964).'},
-    {id: 4, title: 'The Super Nintendo', decade: '1990s', image:'https://www.chrismcovell.com/secret/1990/Shoshinkai-01M.jpg', description: 'On August 28 and 29, 1990, Nintendo held their own game show, having shunned June\'s Tokyo Toy Show.  Attendees came to witness the public launch of the Super Famicom and its games.  Marukatsu Famicom magazine held a prize draw to allow 10 of its readers to attend the show and report their opinions on all the games.  First up are...'}
+    {id: 5, title: 'The Super Nintendo', decade: '1990s', image:'https://www.chrismcovell.com/secret/1990/Shoshinkai-01M.jpg', description: 'On August 28 and 29, 1990, Nintendo held their own game show, having shunned June\'s Tokyo Toy Show.  Attendees came to witness the public launch of the Super Famicom and its games.  Marukatsu Famicom magazine held a prize draw to allow 10 of its readers to attend the show and report their opinions on all the games.  First up are...'}
 	],
 
 };
@@ -45,7 +45,7 @@ const initialEventState = {
 const eventReducer = (state = initialEventState, action) => {
 	if (action.type === 'setEvent') {
 		console.log('setting event...', action.payload);
-		const updatedEvents = [...state.events, action.payload];
+		const updatedEvents = [action.payload, ...state.events];
 		return {...state, events: updatedEvents}
 	}
 

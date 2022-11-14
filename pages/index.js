@@ -6,7 +6,7 @@ import classes from './index.module.css';
 function Home() {
 	return (
 		<div className={classes.featured}>
-    <BaseButton text="Add Another Event"></BaseButton>
+    <BaseButton type="link" destination="/addNewEventPage" text="Add Another Event"></BaseButton>
     <FeaturedEvents />
     </div>
 	);

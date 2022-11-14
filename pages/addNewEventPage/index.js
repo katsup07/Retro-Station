@@ -1,6 +1,6 @@
 import AddPostForm from "../../components/AddPostForm";
 
-const AddNewEvent = () => {
+const AddNewEventPage = () => {
 	return (
 		<>
 			<div>Add an event to the logbook...</div>
@@ -9,4 +9,4 @@ const AddNewEvent = () => {
 	);
 };
 
-export default AddNewEvent;
+export default AddNewEventPage;
