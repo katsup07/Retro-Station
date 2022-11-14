@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
 
 const AddPostForm = () => {
+
+  const dispatch = useDispatch();
 	const titleRef = useRef();
 	const imageRef = useRef();
 	const decadeRef = useRef();
@@ -11,13 +14,13 @@ const AddPostForm = () => {
 	const formSubmitHandler = (e) => {
 		e.preventDefault();
 		const eventData = {
+      id: Date.now(),
 			title: titleRef.current.value,
 			image: imageRef.current.value,
 			decade: decadeRef.current.value,
 			description: descriptionRef.current.value,
 		};
-
-		console.log(eventData);
+    dispatch({type: 'setEvent', payload: eventData});
 	};
 
 	return (

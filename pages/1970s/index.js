@@ -1,5 +1,12 @@
+import FilteredEvents from "../../components/FilteredEvents";
+
 const SeventiesHistory = () => {
-  return ( <div>Posts about the 1970s</div> );
+  return ( 
+    <>
+      <div>Events from the 1970s</div>
+      <FilteredEvents decade='1970s'/>
+    </>
+     );
 }
  
 export default SeventiesHistory;

@@ -6,3 +6,7 @@ html, body{
 li .active{
   color: white;
 }
+
+li{
+  list-style: none;
+}
