@@ -22,7 +22,7 @@ const AddPostForm = () => {
 			decade: decadeRef.current.value,
 			description: descriptionRef.current.value,
 		};
-    dispatch({type: 'setEvent', payload: eventData});
+    dispatch({type: 'addEvent', eventData});
     router.replace('/');
 	};
 

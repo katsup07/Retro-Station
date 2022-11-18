@@ -16,3 +16,23 @@
   width: 100%;
   margin-left: 0;
 }
+
+.event .deleteButtonContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.deleteButtonContainer button{
+  height:1.25rem;
+  margin: 0.3rem;
+  border: 0.1px solid rgb(179, 179, 179);
+  border-radius: 0.2rem;
+  color: red;
+  width: 1.2rem !important;
+}
+
+.deleteButtonContainer button:hover{
+  background-color: rgb(255, 80, 80);
+  color: white;
+  cursor: pointer;
+}

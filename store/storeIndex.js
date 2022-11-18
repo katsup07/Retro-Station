@@ -81,11 +81,17 @@ const initialEventState = {
 };
 
 const eventReducer = (state = initialEventState, action) => {
-	if (action.type === 'setEvent') {
-		console.log('setting event...', action.payload);
-		const updatedEvents = [action.payload, ...state.events];
+	if (action.type === 'addEvent') {
+		console.log('adding event...', action.eventData);
+		const updatedEvents = [action.eventData, ...state.events];
 		return { ...state, events: updatedEvents };
 	}
+
+  if(action.type === 'deleteEvent'){
+    console.log('deleting event...');
+    const updatedEvents = state.events.filter(event => event.id !== action.eventId);
+    return { ...state, events: updatedEvents};
+  }
 
 	return state;
 };
