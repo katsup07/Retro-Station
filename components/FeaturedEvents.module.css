@@ -1,5 +1,6 @@
 .event li{
   list-style: none;
+  padding: 1rem;
 }
 
 .event h2{

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import BaseButton from './ui/BaseButton';
+import { useEffect} from 'react';
+import { getPostsFromServer } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
 
 const FeaturedEvents = () => {
@@ -7,6 +8,13 @@ const FeaturedEvents = () => {
 	const events = useSelector((state) => state.eventReducer.events);
   const isAuth = useSelector(state => state.authReducer.isAuth)
 	console.log(events);
+
+  useEffect(()=>{
+    (async function fetch() {
+    const eventPosts = await getPostsFromServer();
+    dispatch({type: 'addMultipleEvents', multipleEventsData: eventPosts });
+    })()
+  },[dispatch] );
 
   function handleDelete(eventId){
     console.log('handling delete...');

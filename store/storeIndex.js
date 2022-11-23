@@ -22,7 +22,7 @@ title: titleRef.current.value,
 image: imageRef.current.value,
 decade: decadeRef.current.value,
 description: descriptionRef.current.value, */
-
+const initialEventState2 = {events:[]}
 const initialEventState = {
 	events: [
 		{
@@ -86,6 +86,13 @@ const eventReducer = (state = initialEventState, action) => {
 		const updatedEvents = [action.eventData, ...state.events];
 		return { ...state, events: updatedEvents };
 	}
+
+  if(action.type === 'addMultipleEvents'){
+    console.log('adding multiple events...');
+    const updatedEvents = [...action.multipleEventsData];
+    console.log(updatedEvents);
+    return { ...state, events: updatedEvents};
+  }
 
   if(action.type === 'deleteEvent'){
     console.log('deleting event...');

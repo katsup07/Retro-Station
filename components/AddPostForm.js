@@ -13,17 +13,33 @@ const AddPostForm = () => {
 	const decadeRef = useRef();
 	const descriptionRef = useRef();
 
-	const formSubmitHandler = (e) => {
+  const registerEvent = async(eventData) => {
+   const response = await fetch('https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent.json', {
+      method: 'POST',
+      body: JSON.stringify(eventData),
+    });
+    const responseData = await response.json();
+
+    if(!response.ok){
+      // add error handling and display message to user later...
+      console.log(response);
+    }
+
+    console.log(responseData);
+    eventData.id = responseData.name;
+    dispatch({type: 'addEvent', eventData});
+  }
+
+	const formSubmitHandler = async (e) => {
 		e.preventDefault();
 		const eventData = {
-      id: Date.now(),
 			title: titleRef.current.value,
 			image: imageRef.current.value,
 			decade: decadeRef.current.value,
 			description: descriptionRef.current.value,
 		};
-    dispatch({type: 'addEvent', eventData});
-    router.replace('/');
+    await registerEvent(eventData);
+    router.replace('/')
 	};
 
 function getJsxContent(){
