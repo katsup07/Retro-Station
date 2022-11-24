@@ -1,13 +1,35 @@
 import { createStore, combineReducers } from 'redux';
 
-const initialAuthState = { isAuth: false, username: '' };
+const initialAuthState = {
+	isAuth: false,
+	token: '',
+	userId: '',
+	tokenExpiration: '',
+	username: '',
+};
 
 const authReducer = (state = initialAuthState, action) => {
-	if (action.type === 'login')
-		return { isAuth: true, username: state.username };
+	const { payload } = action
+
+	if (action.type === 'login'){
+    console.log('logging user in in auth - payload: ', payload);
+		return {
+			isAuth: payload.token ? true : false,
+			token: payload.token,
+			userId: payload.userId,
+			tokenExpiration: payload.tokenExpiration,
+			username: state.username,
+		};
+  }
 
 	if (action.type === 'logout')
-		return { isAuth: false, username: state.username };
+		return {
+			isAuth: false,
+			token: '',
+			userId: '',
+			tokenExpiration: '',
+			username: state.username,
+		};
 
 	if (action.type === 'setUsername') {
 		console.log('setting username in auth - value: ', action.payload);
@@ -22,7 +44,7 @@ title: titleRef.current.value,
 image: imageRef.current.value,
 decade: decadeRef.current.value,
 description: descriptionRef.current.value, */
-const initialEventState2 = {events:[]}
+const initialEventState2 = { events: [] };
 const initialEventState = {
 	events: [
 		{
@@ -73,9 +95,17 @@ const initialEventState = {
 			id: 6,
 			title: 'Burger King',
 			decade: '1970s',
-			image: 'https://i.pinimg.com/736x/ec/c4/ee/ecc4ee446a61f8fb65ae71f78c836dc1.jpg',
-			description:
-				"This is Burger King in the 70s.",
+			image:
+				'https://i.pinimg.com/736x/ec/c4/ee/ecc4ee446a61f8fb65ae71f78c836dc1.jpg',
+			description: 'This is Burger King in the 70s.',
+		},
+		{
+			id: 7,
+			title: 'C',
+			decade: '1970s',
+			image:
+				'https://fossbytes.com/wp-content/uploads/2020/01/C-pogramming-language-of-2019_tiobe.jpg',
+			description: 'A successor to the programming language B, C was originally developed at Bell Labs by Dennis Ritchie between 1972 and 1973 to construct utilities running on Unix. It was applied to re-implementing the kernel of the Unix operating system. During the 1980s, C gradually gained popularity. It has become one of the most widely used programming languages, with C compilers available for almost all modern computer architectures and operating systems. - Wikipedia',
 		},
 	],
 };
@@ -87,18 +117,20 @@ const eventReducer = (state = initialEventState, action) => {
 		return { ...state, events: updatedEvents };
 	}
 
-  if(action.type === 'addMultipleEvents'){
-    console.log('adding multiple events...');
-    const updatedEvents = [...action.multipleEventsData];
-    console.log(updatedEvents);
-    return { ...state, events: updatedEvents};
-  }
+	if (action.type === 'addMultipleEvents') {
+		console.log('adding multiple events...');
+		const updatedEvents = [...action.multipleEventsData];
+		console.log(updatedEvents);
+		return { ...state, events: updatedEvents };
+	}
 
-  if(action.type === 'deleteEvent'){
-    console.log('deleting event...');
-    const updatedEvents = state.events.filter(event => event.id !== action.eventId);
-    return { ...state, events: updatedEvents};
-  }
+	if (action.type === 'deleteEvent') {
+		console.log('deleting event...');
+		const updatedEvents = state.events.filter(
+			(event) => event.id !== action.eventId
+		);
+		return { ...state, events: updatedEvents };
+	}
 
 	return state;
 };
