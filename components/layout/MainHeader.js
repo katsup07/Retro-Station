@@ -14,7 +14,7 @@ const MainHeader = () => {
 			<nav className={classes.nav}>
 				<ul>
 					<li>
-						<Link href='/' className={router.pathname === '/' ? 'active banner' : ''}>
+						<Link href='/' className={router.pathname === '/' ? 'active' : ''}>
 							Retro Station
 						</Link>
 					</li>

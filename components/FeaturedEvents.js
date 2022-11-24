@@ -1,24 +1,42 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
+import { router } from 'next/router';
 import { getPostsFromServer } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
+import BaseButton from './ui/BaseButton';
 
 const FeaturedEvents = () => {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const events = useSelector((state) => state.eventReducer.events);
-  const isAuth = useSelector(state => state.authReducer.isAuth)
+	const isAuth = useSelector((state) => state.authReducer.isAuth);
 	console.log(events);
 
-  useEffect(()=>{
-    (async function fetch() {
-    const eventPosts = await getPostsFromServer();
-    dispatch({type: 'addMultipleEvents', multipleEventsData: eventPosts });
-    })()
-  },[dispatch] );
+	useEffect(() => {
+		(async function fetch() {
+			const eventPosts = await getPostsFromServer();
+			dispatch({ type: 'addMultipleEvents', multipleEventsData: eventPosts });
+		})();
+	}, [dispatch]);
 
-  function handleDelete(eventId){
-    console.log('handling delete...');
-    dispatch({ type: 'deleteEvent', eventId});
+	async function handleDelete(eventId) {
+		console.log('handling delete...');
+    const response = await fetch(`https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,{
+      method: 'DELETE',
+    });
+
+    const responseData = await response.json();
+
+    if(!response.ok){
+      // add error handling with info for user here
+      console.log(responseData);
+    } 
+
+	  dispatch({ type: 'deleteEvent', eventId });
+	}
+
+  function handleEdit(eventId){
+    console.log('handling edit for...', eventId);
+    router.push(`/editEventPage/${eventId}`);
   }
 
 	function getJsxContent() {
@@ -26,12 +44,23 @@ const FeaturedEvents = () => {
 
 		return events.map((event) => (
 			<li className={classes.events} key={event.id}>
+				
 				<div className={classes.deleteButtonContainer}>
 					<h2>{event.title}</h2>
-					{ isAuth && <button onClick={() => handleDelete(event.id)}>&#x2716;</button>}
+					{isAuth && (
+						<button onClick={() => handleDelete(event.id)}>&#x2716;</button>
+					)}
 				</div>
 				<img src={event.image} alt={event.title} width='200px'></img>
 				<p>{event.description}</p>
+        {isAuth && (
+					<div className={classes.editButtonContainer}>
+						<BaseButton
+							onClick={() => handleEdit(event.id)}>
+							Edit
+						</BaseButton>
+					</div>
+				)}
 				<hr />
 			</li>
 		));

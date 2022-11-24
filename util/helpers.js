@@ -17,6 +17,11 @@ export async function getPostsFromServer(){
   return events;
 }
 
+export async function findPostOnServer(id){
+  const events = await getPostsFromServer();
+  return events.find(event => event.id === id );
+}
+
 // eventsData = {"-NHYwfRNEQQE-kLLLZR7": {
 // decade: 
 // "1960s",

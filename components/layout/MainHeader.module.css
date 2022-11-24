@@ -1,6 +1,8 @@
-.header nav{
-  display: flex;
-  margin-top: 0;
+
+.header .nav{
+
+  width: 100vw;
+  margin: 0;
   margin-bottom: 1rem;
   padding: 0.2rem;
   background: rgb(51, 54, 82);
@@ -10,6 +12,8 @@
   text-decoration: none;
   height: 3.4rem;
 }
+
+
 
 .header a{
   font-size: 2.5rem;
@@ -27,7 +31,7 @@
 .header ul{
   display: flex;
   justify-content: space-between;
-  width: 200%;
+  width: 100%;
   margin: 0;
   list-style: none;
 }
@@ -35,7 +39,8 @@
 .header .decades{
   display: flex;
   justify-content: space-around;
-  max-width: 23%;
+  padding: 0 .4rem;
+  
 }
 
 .auth a{
@@ -49,7 +54,7 @@
 }
 
 .decades li{
-  margin-left: 2%;
+  margin-left: 0.4rem;
 }
 
 .header button{
@@ -62,7 +67,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 850px){
   .header ul{
     flex-direction: column;
     justify-content: center;
@@ -72,32 +77,24 @@
   .header .decades{
     font-size: 2rem;
   }
-  .header nav{
+  .header .nav{
     height: 8rem;
     padding: 0.4rem;
+    height: 50%;
   }
  
 }
 
-@media screen and (max-width: 460px){
-  .decades a{
-    font-size: 0.8rem;
+@media screen and (max-width: 300px){
+  .decades a, .header button {
+    font-size: 0.7rem;
   }
 
-  .decades{
+  .header .nav{
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
-  }
-
-  .decades ul, .decades li, .decades button, .decades nav{
-    height: 1rem;
-    margin: 0;
-    padding: 0;
-  }
-  .header nav{
-    height: 15rem;
+    height: 9rem;
+    overflow: scroll;
   }
  
 }

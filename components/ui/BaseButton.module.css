@@ -6,7 +6,8 @@
   font-weight: 600;
   border-radius: 0.2rem;
   width: 100%;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 0.8rem;
+  font-family: Cambria, 'Times New Roman', serif;
   padding: 0.1rem 0.6rem;
 }
 
@@ -20,6 +21,6 @@
 .btn a{
   text-decoration: none;
   margin: 1.6rem;
-  padding: 0.2rem 0.4rem;
-  font-size: 0.8rem;
+  
+  
 }

@@ -7,7 +7,8 @@ import classes from './AddPostForm.module.css';
 const AddPostForm = () => {
 
   const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.authReducer.isAuth)
+  const isAuth = useSelector(state => state.authReducer.isAuth);
+
 	const titleRef = useRef();
 	const imageRef = useRef();
 	const decadeRef = useRef();
@@ -62,7 +63,7 @@ function getJsxContent(){
 				</select>
 
 				<label htmlFor='description'>Description</label>
-				<textarea id='description' ref={descriptionRef}></textarea>
+				<textarea id='description' rows="10" ref={descriptionRef}></textarea>
 				<div className={classes.btn}>
 					<BaseButton text='post'></BaseButton>
 				</div>
@@ -70,11 +71,12 @@ function getJsxContent(){
 		</section>
 	);
   }
- 
+ // else not auth
   return <p>Please login to add new event posts.</p>
 }
 
 return getJsxContent();
+
 }
 
 export default AddPostForm;
