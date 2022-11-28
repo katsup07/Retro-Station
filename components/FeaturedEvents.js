@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { router } from 'next/router';
-import { getPostsFromServer } from '../util/helpers';
+import { getPostsFromServer, deletePostOnServer } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
 import BaseButton from './ui/BaseButton';
 
@@ -19,19 +19,9 @@ const FeaturedEvents = () => {
 	}, [dispatch]);
 
 	async function handleDelete(eventId) {
-		console.log('handling delete...');
-    const response = await fetch(`https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,{
-      method: 'DELETE',
-    });
-
-    const responseData = await response.json();
-
-    if(!response.ok){
-      // add error handling with info for user here
-      console.log(responseData);
-    } 
-
-	  dispatch({ type: 'deleteEvent', eventId });
+    console.log('handling delete for...', eventId);
+    if(await deletePostOnServer(eventId)) ;
+	    dispatch({ type: 'deleteEvent', eventId });
 	}
 
   function handleEdit(eventId){

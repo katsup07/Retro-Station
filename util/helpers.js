@@ -1,3 +1,4 @@
+// Request calls to the backend
 export async function getPostsFromServer(){
   const response= await fetch('https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent.json');
   
@@ -21,6 +22,42 @@ export async function findPostOnServer(id){
   const events = await getPostsFromServer();
   return events.find(event => event.id === id );
 }
+
+export async function deletePostOnServer(eventId){
+    const response = await fetch(`https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,{
+      method: 'DELETE',
+    });
+
+    const responseData = await response.json();
+
+    if(!response.ok){
+      // add error handling with info for user here
+      console.log(responseData);
+    } 
+    return response.ok;
+}
+
+export async function postOnServer(eventData, eventId){
+  console.log('posting on server...');
+  const response = await fetch(
+    `https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,
+    {
+      method: 'PUT', // !! This needs to be changed to a PUT request and look at how to change id to do so.
+      body: JSON.stringify(eventData),
+    }
+  );
+  const responseData = await response.json();
+
+  if (!response.ok) {
+    // add error handling and display message to user later...
+    console.log(response);
+  }
+
+  console.log(responseData);
+  eventData.id = responseData.name;
+  return response.ok;
+}
+
 
 // eventsData = {"-NHYwfRNEQQE-kLLLZR7": {
 // decade: 

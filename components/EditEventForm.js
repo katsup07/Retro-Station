@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { router } from 'next/router';
-import { findPostOnServer } from '../util/helpers';
+import { findPostOnServer, postOnServer } from '../util/helpers';
 import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
 
@@ -29,24 +29,10 @@ const EditEventForm = ({ eventId }) => {
 		})();
 	}, []);
 
-	const registerEvent = async (eventData) => {
-		const response = await fetch(
-			`https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,
-			{
-				method: 'PUT', // !! This needs to be changed to a PUT request and look at how to change id to do so.
-				body: JSON.stringify(eventData),
-			}
-		);
-		const responseData = await response.json();
-
-		if (!response.ok) {
-			// add error handling and display message to user later...
-			console.log(response);
-		}
-
-		console.log(responseData);
-		eventData.id = responseData.name;
-		dispatch({ type: 'addEvent', eventData });
+	const handlePostingEvent = async (eventData) => {
+    console.log("handling posting event...", eventData);
+    if(await postOnServer(eventData, eventId))
+		  dispatch({ type: 'addEvent', eventData });
 	};
 
 	const formSubmitHandler = async (e) => {
@@ -57,8 +43,8 @@ const EditEventForm = ({ eventId }) => {
 			decade,
 			description,
 		};
-    console.log(eventData);
-	  await registerEvent(eventData);
+
+	  await handlePostingEvent(eventData);
 		router.replace('/');
 	};
 
