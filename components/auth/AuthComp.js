@@ -1,10 +1,16 @@
 import BaseButton from '../ui/BaseButton';
+import { authenticateOnServer } from '../../util/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
 import classes from './AuthComp.module.css';
 import { router } from 'next/router';
 
 const Auth = () => {
+	const signupUrl =
+		'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg';
+	const signinUrl =
+		'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg';
+
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
 
@@ -16,8 +22,6 @@ const Auth = () => {
 	const emailInputRef = useRef();
 	const passwordInputRef = useRef();
 
-	const checkAuthOnBackEnd = () => {};
-
 	const validate = () => {
 		const [email, password] = [
 			emailInputRef.current.value,
@@ -26,62 +30,45 @@ const Auth = () => {
 		return email.includes('@') && email.length > 5 && password.length > 5;
 	};
 
-	const handleSignUp = async (e, email, password) => {
+   // url decides whether it is a login or signup request. Everything else is the same.
+	const handleLoginOrSignup = async (e, email, password, url) => {
 		e.preventDefault();
 		if (!validate()) return setError(true);
-		const response = await fetch(
-			'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg',
-			{
-				method: 'POST',
-				body: JSON.stringify({ email, password, returnSecureToken: true }),
-			}
+
+		const { response, responseData } = await authenticateOnServer(
+			email,
+			password,
+			url
 		);
-
-		const responseData = await response.json();
-
 		if (!response.ok) {
-      console.log(responseData.error.errors[0].message);
-      return setHttpError("Error sending signup request to server --" + responseData.error.errors[0].message);
+			console.log(responseData.error.errors[0].message);
+			return setHttpError(
+				'Error sending login request to server --' +
+					responseData.error.errors[0].message
+			);
 		}
 
 		console.log(responseData);
-    handleLoginAndLogout(e, responseData);
+		handleLoginOrLogout(e, responseData);
 	};
 
-  const handleLogin = async(e, email, password) => {
-    e.preventDefault();
-		if (!validate()) return setError(true);
-		const response = await fetch(
-			'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg',
-			{
-				method: 'POST',
-				body: JSON.stringify({ email, password, returnSecureToken: true }),
-			}
-		);
-
-		const responseData = await response.json();
-
-		if (!response.ok) {
-      console.log(responseData.error.errors[0].message);
-      return setHttpError("Error sending login request to server --" + responseData.error.errors[0].message);
-		}
-
-		console.log(responseData);
-    handleLoginAndLogout(e, responseData);
-  }
-
-
-	const handleLoginAndLogout = (e, data) => {
+	const handleLoginOrLogout = (e, data) => {
 		e.preventDefault();
 		console.log('isAuth: ', isAuth);
-		checkAuthOnBackEnd();
 		if (isAuth) {
-			console.log('handleLoginAndLogout() -logging user out...');
+			console.log('handleLoginOrLogout() -logging user out...');
 			dispatch({ type: 'logout' });
 			dispatch({ type: 'setUsername', payload: '' });
 		} else {
-			console.log('handleLoginAndLogout() -logging user in... data: ', data);
-			dispatch({ type: 'login', payload: {token: data.idToken, userId: data.localId, tokenExpiration: data.expiresIn} });
+			console.log('handleLoginOrLogout() -logging user in... data: ', data);
+			dispatch({
+				type: 'login',
+				payload: {
+					token: data.idToken,
+					userId: data.localId,
+					tokenExpiration: data.expiresIn,
+				},
+			});
 			dispatch({
 				type: 'setUsername',
 				payload: usernameInputRef.current.value,
@@ -94,11 +81,7 @@ const Auth = () => {
 	function JSXContent() {
 		const emailUsernameAndPasswordInputs = (
 			<>
-				{httpError && (
-					<p className={classes.errorMessage}>
-						{httpError}
-					</p>
-				)}
+				{httpError && <p className={classes.errorMessage}>{httpError}</p>}
 				<label htmlFor='email'>Email</label>
 				<input
 					type='email'
@@ -132,7 +115,7 @@ const Auth = () => {
 		if (isAuth) {
 			// already logged in
 			return (
-				<form className={classes.form} onSubmit={handleLoginAndLogout}>
+				<form className={classes.form} onSubmit={handleLoginOrLogout}>
 					<BaseButton text='confirm logout'></BaseButton>
 				</form>
 			);
@@ -150,10 +133,11 @@ const Auth = () => {
 					<form
 						className={classes.form}
 						onSubmit={(e) =>
-							handleSignUp(
+							handleLoginOrSignup(
 								e,
 								emailInputRef.current.value,
-								passwordInputRef.current.value
+								passwordInputRef.current.value,
+								signupUrl
 							)
 						}>
 						{emailUsernameAndPasswordInputs}
@@ -170,8 +154,16 @@ const Auth = () => {
 						onClick={() => setMode('signup')}
 						text='Switch to signup >>'></BaseButton>
 				</div>
-				<form className={classes.form} onSubmit={(e) => handleLogin(e, emailInputRef.current.value,
-								passwordInputRef.current.value)}>
+				<form
+					className={classes.form}
+					onSubmit={(e) =>
+						handleLoginOrSignup(
+							e,
+							emailInputRef.current.value,
+							passwordInputRef.current.value,
+							signinUrl
+						)
+					}>
 					{emailUsernameAndPasswordInputs}
 					<BaseButton text='Login'></BaseButton>
 				</form>
