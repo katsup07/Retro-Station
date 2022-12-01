@@ -31,7 +31,7 @@ const Auth = () => {
 	};
 
    // url decides whether it is a login or signup request. Everything else is the same.
-	const handleLoginOrSignup = async (e, email, password, url) => {
+	const handleServersideLoginOrSignupAuth = async (e, email, password, url) => {
 		e.preventDefault();
 		if (!validate()) return setError(true);
 
@@ -49,18 +49,18 @@ const Auth = () => {
 		}
 
 		console.log(responseData);
-		handleLoginOrLogout(e, responseData);
+		handleStoreLoginOrLogout(e, responseData);
 	};
 
-	const handleLoginOrLogout = (e, data) => {
+	const handleStoreLoginOrLogout = (e, data) => {
 		e.preventDefault();
 		console.log('isAuth: ', isAuth);
 		if (isAuth) {
-			console.log('handleLoginOrLogout() -logging user out...');
+			console.log('handleStoreLoginOrLogout() -logging user out...');
 			dispatch({ type: 'logout' });
 			dispatch({ type: 'setUsername', payload: '' });
 		} else {
-			console.log('handleLoginOrLogout() -logging user in... data: ', data);
+			console.log('handleStoreLoginOrLogout() -logging user in... data: ', data);
 			dispatch({
 				type: 'login',
 				payload: {
@@ -113,16 +113,16 @@ const Auth = () => {
 		);
 
 		if (isAuth) {
-			// already logged in
+			// logout
 			return (
-				<form className={classes.form} onSubmit={handleLoginOrLogout}>
+				<form className={classes.form} onSubmit={handleStoreLoginOrLogout}>
 					<BaseButton text='confirm logout'></BaseButton>
 				</form>
 			);
 		}
 
 		if (mode === 'signup') {
-			// user wants to signup
+			// signup
 			return (
 				<div>
 					<div className={classes.option}>
@@ -133,7 +133,7 @@ const Auth = () => {
 					<form
 						className={classes.form}
 						onSubmit={(e) =>
-							handleLoginOrSignup(
+							handleServersideLoginOrSignupAuth(
 								e,
 								emailInputRef.current.value,
 								passwordInputRef.current.value,
@@ -146,7 +146,7 @@ const Auth = () => {
 				</div>
 			);
 		}
-		// else !isAuth && !signup -> login
+		// sign in
 		return (
 			<div>
 				<div className={classes.option}>
@@ -157,7 +157,7 @@ const Auth = () => {
 				<form
 					className={classes.form}
 					onSubmit={(e) =>
-						handleLoginOrSignup(
+						handleServersideLoginOrSignupAuth(
 							e,
 							emailInputRef.current.value,
 							passwordInputRef.current.value,
