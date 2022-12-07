@@ -1,15 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { router } from 'next/router';
 import { getPostsFromServer, deletePostOnServer } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
 import BaseButton from './ui/BaseButton';
 
-const FeaturedEvents = () => {
+const FeaturedEvents = ({initialEvents}) => {
 	const dispatch = useDispatch();
 	const events = useSelector((state) => state.eventReducer.events);
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
-	console.log(events);
 
 	useEffect(() => {
 		(async function fetch() {
@@ -30,7 +29,8 @@ const FeaturedEvents = () => {
   }
 
 	function getJsxContent() {
-		if (events.length === 0) return <div>Currently there are no events.</div>;
+		if (events.length === 0)
+     return <div>Currently there are no events.</div>;
 
 		return events.map((event) => (
 			<li className={classes.events} key={event.id}>

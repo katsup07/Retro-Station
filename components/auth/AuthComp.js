@@ -30,7 +30,7 @@ const Auth = () => {
 		return email.includes('@') && email.length > 5 && password.length > 5;
 	};
 
-   // url decides whether it is a login or signup request. Everything else is the same.
+   // url decides whether it is a login or signup request.
 	const handleServersideLoginOrSignupAuth = async (e, email, password, url) => {
 		e.preventDefault();
 		if (!validate()) return setError(true);
