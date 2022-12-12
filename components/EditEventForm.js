@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { router } from 'next/router';
-import { findPostOnServer, postOnServer } from '../util/helpers';
+import { findPostOnServer, updateOnServer } from '../util/helpers';
 import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
 
@@ -9,6 +9,7 @@ const EditEventForm = ({ eventId }) => {
   let ev = '';
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
+  const username = useSelector(state => state.authReducer.username);
 
 	// const [title, setTitle] = useState("hi");
 	const [title, setTitle] = useState('');
@@ -31,7 +32,7 @@ const EditEventForm = ({ eventId }) => {
 
 	const handlePostingEvent = async (eventData) => {
     console.log("handling posting event...", eventData);
-    if(await postOnServer(eventData, eventId))
+    if(await updateOnServer(eventData, eventId))
 		  dispatch({ type: 'addEvent', eventData });
 	};
 
@@ -42,8 +43,10 @@ const EditEventForm = ({ eventId }) => {
 			image,
 			decade,
 			description,
+      author: username,
 		};
 
+    console.log('eventData: ', eventData);
 	  await handlePostingEvent(eventData);
 		router.replace('/');
 	};

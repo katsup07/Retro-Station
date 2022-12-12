@@ -1,4 +1,21 @@
 // Request calls to the backend
+export async function postEventOnServer(eventData){
+  const response = await fetch('https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent.json', {
+     method: 'POST',
+     body: JSON.stringify(eventData),
+   });
+   const responseData = await response.json();
+
+   if(!response.ok){
+     // TODO add error handling and display message to user.
+     console.log(response);
+   }
+
+   console.log(responseData);
+   eventData.id = responseData.name;
+   return response.ok;
+ }
+
 export async function getPostsFromServer() {
 	const response = await fetch(
 		'https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent.json'
@@ -42,12 +59,12 @@ export async function deletePostOnServer(eventId) {
 	return response.ok;
 }
 
-export async function postOnServer(eventData, eventId) {
+export async function updateOnServer(eventData, eventId) {
 	console.log('posting on server...');
 	const response = await fetch(
 		`https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent/${eventId}.json`,
 		{
-			method: 'PUT', // !! This needs to be changed to a PUT request and look at how to change id to do so.
+			method: 'PUT',
 			body: JSON.stringify(eventData),
 		}
 	);

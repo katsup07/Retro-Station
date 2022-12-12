@@ -7,7 +7,6 @@ import BaseButton from './ui/BaseButton';
 
 const FeaturedEvents = ({initialEvents}) => {
 	const dispatch = useDispatch();
-  const [permissionDenied, setPermissionDenied] = useState(false);
 	const events = useSelector((state) => state.eventReducer.events);
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
 	const username = useSelector((state) => state.authReducer.username);
@@ -19,21 +18,21 @@ const FeaturedEvents = ({initialEvents}) => {
 		})();
 	}, [dispatch]);
 
-	async function handleDelete(eventId) {
-    console.log('handling delete for...', eventId);
-     // TODO - Create individual userpages, reuse components, and move the delete and edit logic there
-     const post = (await getPostsFromServer()).filter(post => {
-      return post.author === username && post.id === eventId;
-    });
+	// async function handleDelete(eventId) {
+  //   console.log('handling delete for...', eventId);
+  //    // TODO - Create individual userpages, reuse components, and move the delete and edit logic there
+  //    const post = (await getPostsFromServer()).filter(post => {
+  //     return post.author === username && post.id === eventId;
+  //   });
     
-    if(post.length > 0 && await deletePostOnServer(eventId))
-	    dispatch({ type: 'deleteEvent', eventId });
-	}
+  //   if(post.length > 0 && await deletePostOnServer(eventId))
+	//     dispatch({ type: 'deleteEvent', eventId });
+	// }
 
-  function handleEdit(eventId){
+/*   function handleEdit(eventId){
     console.log('handling edit for...', eventId);
     router.push(`/editEventPage/${eventId}`);
-  }
+  } */
 
 	function getJsxContent() {
 		if (events.length === 0)
@@ -42,22 +41,22 @@ const FeaturedEvents = ({initialEvents}) => {
 		return events.map((event) => (
 			<li className={classes.events} key={event.id}>
 				
-				<div className={classes.deleteButtonContainer}>
-					<h2>{event.title}</h2>
+        <h2>{event.title}</h2>
+				{/* <div className={classes.deleteButtonContainer}>
 					{isAuth && (
 						<button onClick={() => handleDelete(event.id)}>&#x2716;</button>
 					)}
-				</div>
+				</div> */}
 				<img src={event.image} alt={event.title} width='200px'></img>
 				<p>{event.description}</p>
-        {isAuth && (
+      {/*   {isAuth && (
 					<div className={classes.editButtonContainer}>
 						<BaseButton
 							onClick={() => handleEdit(event.id)}>
 							Edit
 						</BaseButton>
 					</div>
-				)}
+				)} */}
 				<hr />
 			</li>
 		));

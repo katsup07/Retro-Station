@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { postEventOnServer } from '../util/helpers';
 import { router } from 'next/router';
 import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
@@ -15,23 +16,6 @@ const AddPostForm = () => {
 	const decadeRef = useRef();
 	const descriptionRef = useRef();
 
-  const registerEvent = async(eventData) => {
-   const response = await fetch('https://retrostation-9a405-default-rtdb.asia-southeast1.firebasedatabase.app/pastEvent.json', {
-      method: 'POST',
-      body: JSON.stringify(eventData),
-    });
-    const responseData = await response.json();
-
-    if(!response.ok){
-      // TODO add error handling and display message to user.
-      console.log(response);
-    }
-
-    console.log(responseData);
-    eventData.id = responseData.name;
-    dispatch({type: 'addEvent', eventData});
-  }
-
 	const formSubmitHandler = async (e) => {
 		e.preventDefault();
 		const eventData = {
@@ -41,7 +25,8 @@ const AddPostForm = () => {
 			description: descriptionRef.current.value,
       author: username,
 		};
-    await registerEvent(eventData);
+    const result = await postEventOnServer(eventData);
+    if(result)  dispatch({type: 'addEvent', eventData});
     router.replace('/')
 	};
 
