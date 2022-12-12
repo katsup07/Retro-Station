@@ -1,12 +1,22 @@
-import { useSelector } from 'react-redux';
+import { useSelector, dispatch, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getPostsFromServer } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
 
-const FilteredEvents = ({ decade }) => {
+const FilteredEvents = ({ item, filterType }) => { // 1960s, 'Cereal', 'decade' / 'author'
+  const dispatch = useDispatch();
+  const allEvents = useSelector((state) => state.eventReducer.events);
 
+  useEffect(() => {
+		(async function fetch() {
+			const events = await getPostsFromServer();
+			dispatch({ type: 'addMultipleEvents', multipleEventsData: events });
+		})();
+	}, [dispatch]);
 
-  const filteredEvents = useSelector( state => state.eventReducer.events.filter(event => event.decade === decade));
+  console.log(allEvents);
+  const filteredEvents = allEvents.filter(event => event[filterType] === item);
+  console.log(filteredEvents);
 
   return ( filteredEvents.map((event) => (
     <div key={event.id} className={classes.event}>

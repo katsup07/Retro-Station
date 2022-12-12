@@ -1,10 +1,13 @@
 import { getPostsFromServer } from '../util/helpers';
 import FeaturedEvents from '../components/FeaturedEvents';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BaseButton from '../components/ui/BaseButton';
+import plusIcon from '../public/icons/plus-icon.svg';
 import classes from './index.module.css';
 
 // TODO - Add intialEvents from getStaticProps() as the starting events state on pageload
 function Home({ initialEvents }) {
+  console.log(plusIcon);
 
 	return (
 		<div className={classes.featured}>

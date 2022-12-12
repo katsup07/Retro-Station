@@ -1,14 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { router } from 'next/router';
-import { getPostsFromServer, deletePostOnServer } from '../util/helpers';
+import { getPostsFromServer, deletePostOnServer, isOwnerOfPost } from '../util/helpers';
 import classes from './FeaturedEvents.module.css';
 import BaseButton from './ui/BaseButton';
 
 const FeaturedEvents = ({initialEvents}) => {
 	const dispatch = useDispatch();
+  const [permissionDenied, setPermissionDenied] = useState(false);
 	const events = useSelector((state) => state.eventReducer.events);
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
+	const username = useSelector((state) => state.authReducer.username);
 
 	useEffect(() => {
 		(async function fetch() {
@@ -19,7 +21,12 @@ const FeaturedEvents = ({initialEvents}) => {
 
 	async function handleDelete(eventId) {
     console.log('handling delete for...', eventId);
-    if(await deletePostOnServer(eventId)) ;
+     // TODO - Create individual userpages, reuse components, and move the delete and edit logic there
+     const post = (await getPostsFromServer()).filter(post => {
+      return post.author === username && post.id === eventId;
+    });
+    
+    if(post.length > 0 && await deletePostOnServer(eventId))
 	    dispatch({ type: 'deleteEvent', eventId });
 	}
 

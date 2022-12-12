@@ -8,6 +8,7 @@ const AddPostForm = () => {
 
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.authReducer.isAuth);
+  const username = useSelector(state => state.authReducer.username);
 
 	const titleRef = useRef();
 	const imageRef = useRef();
@@ -22,7 +23,7 @@ const AddPostForm = () => {
     const responseData = await response.json();
 
     if(!response.ok){
-      // add error handling and display message to user later...
+      // TODO add error handling and display message to user.
       console.log(response);
     }
 
@@ -38,6 +39,7 @@ const AddPostForm = () => {
 			image: imageRef.current.value,
 			decade: decadeRef.current.value,
 			description: descriptionRef.current.value,
+      author: username,
 		};
     await registerEvent(eventData);
     router.replace('/')

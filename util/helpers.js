@@ -72,6 +72,19 @@ export async function authenticateOnServer(email, password, url) {
 	const responseData = await response.json();
 	return { response, responseData };
 }
+
+export async function isOwnerOfPost(){
+   const post = (await getPostsFromServer()).filter(post => {
+      return post.author === username && post.id === eventId;
+    });
+}
+
+export async function isAuthorOfPost(username){
+  const post = (await getPostsFromServer()).filter(post => {
+    return post.author === username;
+  });
+}
+
 // eventsData = {"-NHYwfRNEQQE-kLLLZR7": {
 // decade:
 // "1960s",

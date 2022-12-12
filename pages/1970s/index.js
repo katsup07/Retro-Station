@@ -4,7 +4,7 @@ const SeventiesHistory = () => {
   return ( 
     <>
       <div>Events from the 1970s</div>
-      <FilteredEvents decade='1970s'/>
+      <FilteredEvents filterType='decade' item='1970s'/>
     </>
      );
 }
