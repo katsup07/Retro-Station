@@ -6,7 +6,6 @@ import BaseButton from './ui/BaseButton';
 import classes from './AddPostForm.module.css';
 
 const EditEventForm = ({ eventId }) => {
-  let ev = '';
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
   const username = useSelector(state => state.authReducer.username);
@@ -20,7 +19,7 @@ const EditEventForm = ({ eventId }) => {
 	useEffect(() => {
 		(async function fetch() {
 			const event = await findPostOnServer(eventId);
-      ev = event;
+      
 			if (event) {
 				setTitle(event.title);
 				setImage(event.image);

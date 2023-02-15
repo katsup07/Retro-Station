@@ -10,10 +10,13 @@ function Home({ initialEvents }) {
   console.log(plusIcon);
 
 	return (
-		<div className={classes.featured}>
-    <BaseButton type="link" destination="/addNewEventPage" text="Add Event"></BaseButton>
-    <FeaturedEvents initialEvents={initialEvents}/>
-    </div>
+    <>
+      <h1 className={classes.header}>Records of Past Events</h1>
+      <div className={classes.featured}>
+      <BaseButton type="link" destination="/addNewEventPage" text="Add Event"></BaseButton>
+      <FeaturedEvents initialEvents={initialEvents}/>
+      </div>
+    </>
 	);
 }
 

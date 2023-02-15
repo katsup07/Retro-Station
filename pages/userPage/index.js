@@ -25,7 +25,7 @@ const UserAdmin = () => {
 
   return ( 
   <>
-    <h2>User admin</h2> 
+    <p>Edit and delete your posts here.</p> 
     <FilteredEvents filterType='author' onDelete={handleDelete} onEdit={handleEdit} item={username}/>
   </>
   );

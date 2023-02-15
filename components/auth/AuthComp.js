@@ -6,10 +6,11 @@ import classes from './AuthComp.module.css';
 import { router } from 'next/router';
 
 const Auth = () => {
+  const firebaseKey = process.env.apiKey;
 	const signupUrl =
-		'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg';
+		`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseKey}`;
 	const signinUrl =
-		'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBR4GaaaFuFgOsbdCeI4cTbuSubFpmHhcg';
+		`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseKey}`;
 
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.authReducer.isAuth);
@@ -128,7 +129,7 @@ const Auth = () => {
 					<div className={classes.option}>
 						<BaseButton
 							onClick={() => setMode('login')}
-							text='Switch to login >>'></BaseButton>
+							text='Switch to login'></BaseButton>
 					</div>
 					<form
 						className={classes.form}
@@ -152,7 +153,7 @@ const Auth = () => {
 				<div className={classes.option}>
 					<BaseButton
 						onClick={() => setMode('signup')}
-						text='Switch to signup >>'></BaseButton>
+						text='Switch to signup'></BaseButton>
 				</div>
 				<form
 					className={classes.form}
@@ -165,7 +166,7 @@ const Auth = () => {
 						)
 					}>
 					{emailUsernameAndPasswordInputs}
-					<BaseButton text='Login'></BaseButton>
+					<BaseButton text='Submit'></BaseButton>
 				</form>
 			</div>
 		);

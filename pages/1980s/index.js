@@ -1,9 +1,11 @@
 import FilteredEvents from "../../components/FilteredEvents";
+import classes from './index.module.css';
+
 
 const EightiesHistory = () => {
   return ( 
   <>
-    <div>Events from the 1980s</div>
+    <div className={classes.header}>Events from the 1980s</div>
     <FilteredEvents filterType='decade' item='1980s'/>
   </>
    );

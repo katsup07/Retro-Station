@@ -25,13 +25,13 @@ const MainHeader = () => {
 							{isAuth ? `Logout - ${username}` : `Login`}
 						</BaseButton>
 					</li>
-					<li className={classes.auth}>
+				{ isAuth && <li className={classes.auth}>
 						<BaseButton
 							onClick={() => router.push('/userPage')}
 							className={router.pathname === '/auth' ? 'active' : ''}>
 							UserAdmin
 						</BaseButton>
-					</li>
+					</li>}
 					<div className={classes.decades}>
 						<li>
 							<Link

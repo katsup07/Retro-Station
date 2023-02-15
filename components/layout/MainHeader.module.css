@@ -5,7 +5,7 @@
   margin: 0;
   margin-bottom: 1rem;
   padding: 0.2rem;
-  background: rgb(51, 54, 82);
+  background: rgb(37, 111, 172);
   font-size: 2.5rem;
   color: rgb(255, 204, 0);
   box-shadow: 0.1rem 0.1rem 0.2rem 0.01rem rgb(159, 159, 159);
@@ -17,15 +17,16 @@
 
 .header a{
   font-size: 2.5rem;
-  color: rgb(255, 118, 118);
   text-decoration: none;
+  color: white;
 }
+
 .header .active{
   color: white;
 }
 
 .header a:hover, .header a:active{
-  color: white;
+  color: rgb(255, 203, 118)
 }
 
 .header ul{
@@ -40,34 +41,24 @@
   display: flex;
   justify-content: space-around;
   padding: 0 .4rem;
-  
 }
 
 .auth a{
   font-size: 1rem;
-  color: rgb(246, 255, 0);
+  color: rgb(255, 203, 118);
 }
 
 .decades a{
   font-size: 1.1rem;
-  color: rgb(255, 118, 118);
+  color: rgb(255, 255, 255);
 }
 
 .decades li{
   margin-left: 0.4rem;
 }
 
-.header button{
-  color: rgb(0, 0, 0);
-  
-}
-
-.header button:hover {
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-}
-
 @media screen and (max-width: 850px){
+ 
   .header ul{
     flex-direction: column;
     justify-content: center;
@@ -77,25 +68,34 @@
   .header .decades{
     font-size: 2rem;
   }
-  .header .nav{
-    height: 8rem;
+  .header .nav {
     padding: 0.4rem;
     height: 50%;
+  }
+
+  .nav ul{
+    font-size: 1rem;
   }
  
 }
 
 @media screen and (max-width: 300px){
-  .decades a, .header button {
+  .header a{
+    font-size: 1.5rem;
+  }
+  .decades a {
+    font-size: 0.8rem;
+  }
+
+  .header button{
     font-size: 0.7rem;
   }
 
   .header .nav{
     display: flex;
     flex-direction: column;
-    height: 9rem;
-    overflow: scroll;
+    height: 6rem;
   }
- 
+
 }
 
