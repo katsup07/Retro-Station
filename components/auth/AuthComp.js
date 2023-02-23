@@ -166,7 +166,7 @@ const Auth = () => {
 						)
 					}>
 					{emailUsernameAndPasswordInputs}
-					<BaseButton text='Submit'></BaseButton>
+					<BaseButton text='Login'></BaseButton>
 				</form>
 			</div>
 		);
