@@ -1,15 +1,11 @@
-.featured p{
-  font-size: 0.8rem;
-}
-
 .header{
   font-size: 2rem;
   font-weight: 900;
-  padding-left: 1rem;
-  margin-bottom: 0.2rem;
   text-align: center;
+  padding-left: 1rem;
   color:rgb(39, 39, 39);
   text-shadow: 1px 1px 2px rgb(167, 167, 167);
 }
+
 /* import classes from './index.module.css'; */
 /* <div className={classes.header}>Events from the 1960s</div> */

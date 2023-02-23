@@ -11,9 +11,9 @@ function Home({ initialEvents }) {
 
 	return (
     <>
-      <h1 className={classes.header}>Records of Past Events</h1>
+      <h1 className={classes.header}>Featured Events</h1>
       <div className={classes.featured}>
-      <BaseButton type="link" destination="/addNewEventPage" text="Add Event"></BaseButton>
+      <BaseButton class="btn" type="link" destination="/addNewEventPage" text="Add Event"></BaseButton>
       <FeaturedEvents initialEvents={initialEvents}/>
       </div>
     </>
