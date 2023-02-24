@@ -114,7 +114,7 @@ const Auth = () => {
 		);
 
 		if (isAuth) {
-			// logout
+			// only show "logout" button
 			return (
 				<form className={classes.form} onSubmit={handleStoreLoginOrLogout}>
 					<BaseButton text='confirm logout'></BaseButton>
@@ -123,14 +123,9 @@ const Auth = () => {
 		}
 
 		if (mode === 'signup') {
-			// signup
+			// mode === signup
 			return (
-				<div>
-					<div className={classes.option}>
-						<BaseButton
-							onClick={() => setMode('login')}
-							text='Switch to login'></BaseButton>
-					</div>
+				<>
 					<form
 						className={classes.form}
 						onSubmit={(e) =>
@@ -144,17 +139,17 @@ const Auth = () => {
 						{emailUsernameAndPasswordInputs}
 						<BaseButton text='SignUp'></BaseButton>
 					</form>
-				</div>
+          <div className={classes.option}>
+						<BaseButton
+							onClick={() => setMode('login')}
+							text='Switch to login'></BaseButton>
+					</div>
+				</>
 			);
 		}
-		// sign in
+		// mode === login
 		return (
-			<div>
-				<div className={classes.option}>
-					<BaseButton
-						onClick={() => setMode('signup')}
-						text='Switch to signup'></BaseButton>
-				</div>
+			<>
 				<form
 					className={classes.form}
 					onSubmit={(e) =>
@@ -168,7 +163,12 @@ const Auth = () => {
 					{emailUsernameAndPasswordInputs}
 					<BaseButton text='Login'></BaseButton>
 				</form>
-			</div>
+        <div className={classes.option}>
+					<BaseButton
+						onClick={() => setMode('signup')}
+						text='Switch to signup'></BaseButton>
+				</div>
+			</>
 		);
 	}
 
