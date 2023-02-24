@@ -1,9 +1,10 @@
 import AddPostForm from "../../components/AddPostForm";
+import classes from './index.module.css';
 
 const AddNewEventPage = () => {
 	return (
 		<>
-			<h2>Add Event</h2>
+			<h1 className={classes.header}>Add Event</h1>
 			<AddPostForm />
 		</>
 	);
