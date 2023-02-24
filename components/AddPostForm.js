@@ -52,14 +52,14 @@ function getJsxContent(){
 				<label htmlFor='description'>Description</label>
 				<textarea id='description' rows="10" ref={descriptionRef}></textarea>
 				<div className={classes.btn}>
-					<BaseButton text='post'></BaseButton>
+					<BaseButton text='Post event'></BaseButton>
 				</div>
 			</form>
 		</section>
 	);
   }
  // else not auth
-  return <p>Please login to add new event posts.</p>
+  return <p className={classes.information}>Please login to add new event posts.</p>
 }
 
 return getJsxContent();
