@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import router from 'next/router';
 import FilteredEvents from './../../components/FilteredEvents';
+import BaseButton from '../../components/ui/BaseButton';
 import { getPostsFromServer, deletePostOnServer } from '../../util/helpers';
+import classes from './index.module.css';
 
 const UserAdmin = () => {
   const username = useSelector(state => state.authReducer.username);
@@ -25,7 +27,8 @@ const UserAdmin = () => {
 
   return ( 
   <>
-    <p>Edit and delete your posts here.</p> 
+    <p className={classes.information}>Add, edit, and delete your posts here.</p> 
+    <BaseButton class="btn" type="link" destination="/addNewEventPage" text="Add Event"></BaseButton>
     <FilteredEvents filterType='author' onDelete={handleDelete} onEdit={handleEdit} item={username}/>
   </>
   );
