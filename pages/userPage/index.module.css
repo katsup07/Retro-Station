@@ -23,3 +23,8 @@ event .deleteButtonContainer{
   color: white;
   cursor: pointer;
 }
+
+.information{
+  margin-left: 1.1rem;
+  margin-bottom: 0.5rem;
+}

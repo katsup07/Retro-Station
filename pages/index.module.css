@@ -11,5 +11,9 @@
   color:rgb(39, 39, 39);
   text-shadow: 1px 1px 2px rgb(167, 167, 167);
 }
-/* import classes from './index.module.css'; */
-/* <div className={classes.header}>Events from the 1960s</div> */
+
+@media screen and (max-width: 500px){
+  .header{
+    font-size: 1.6rem;
+  }
+}
